@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nguyễn Lan Anh | Data &amp; Business Intelligence</title>
+  <meta name="description" content="Portfolio of Nguyễn Lan Anh — Data Analytics and Business Development projects." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── CSS Reset & Variables ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --background: oklch(0.99 0.008 240);
+      --foreground: oklch(0.22 0.03 265);
+      --card: oklch(1 0 0);
+      --primary: oklch(0.72 0.12 235);
+      --primary-fg: oklch(0.2 0.04 260);
+      --secondary: oklch(0.95 0.02 240);
+      --secondary-fg: oklch(0.3 0.04 260);
+      --muted: oklch(0.96 0.012 240);
+      --muted-fg: oklch(0.52 0.03 260);
+      --accent: oklch(0.92 0.06 235);
+      --accent-fg: oklch(0.3 0.08 250);
+      --border: oklch(0.91 0.015 245);
+      --citrus: oklch(0.9 0.18 118);
+      --citrus-fg: oklch(0.32 0.08 120);
+      --blush: oklch(0.78 0.15 352);
+      --blush-fg: oklch(0.32 0.1 352);
+      --azure: oklch(0.72 0.12 235);
+      --azure-fg: oklch(0.22 0.06 250);
+      --ink: oklch(0.24 0.07 275);
+      --ink-fg: oklch(0.97 0.01 250);
+      --radius: 1rem;
+      --font-sans: 'Inter', system-ui, sans-serif;
+      --font-serif: 'Fraunces', Georgia, serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-sans); background: var(--background); color: var(--foreground); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    ul { list-style: none; }
+
+    /* ── Layout helpers ── */
+    .container { max-width: 72rem; margin: 0 auto; padding: 0 1.5rem; }
+    .text-balance { text-wrap: balance; }
+    .text-pretty { text-wrap: pretty; }
+
+    /* ── HEADER ── */
+    #site-header {
+      position: sticky; top: 0; z-index: 50;
+      border-bottom: 1px solid color-mix(in oklch, var(--border), transparent 40%);
+      background: color-mix(in oklch, var(--background), transparent 20%);
+      backdrop-filter: blur(12px);
+    }
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.5rem; max-width: 72rem; margin: 0 auto;
+    }
+    .logo-link { display: flex; align-items: center; gap: 0.75rem; }
+    .logo-icon {
+      display: flex; align-items: center; justify-content: center;
+      width: 2.5rem; height: 2.5rem;
+      border-radius: 0.875rem; background: var(--blush); color: var(--blush-fg);
+      transform: rotate(3deg); transition: transform 0.2s;
+      font-size: 1.2rem; font-weight: 900;
+    }
+    .logo-icon:hover { transform: rotate(12deg); }
+    .logo-name { font-size: 0.9rem; font-weight: 600; display: block; }
+    .logo-role { font-size: 0.625rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted-fg); display: block; }
+    .nav-desktop { display: none; align-items: center; gap: 2rem; }
+    @media (min-width: 768px) { .nav-desktop { display: flex; } }
+    .nav-desktop a { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: color-mix(in oklch, var(--foreground), transparent 30%); transition: color 0.2s; }
+    .nav-desktop a:hover { color: var(--primary); }
+    .badge-open { display: inline-flex; align-items: center; gap: 0.4rem; border-radius: 9999px; background: var(--citrus); padding: 0.375rem 0.75rem; font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--citrus-fg); }
+    .badge-dot { width: 0.375rem; height: 0.375rem; border-radius: 50%; background: var(--citrus-fg); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .menu-btn { display: flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: 0.5rem; border: 1px solid var(--border); background: none; cursor: pointer; }
+    @media (min-width: 768px) { .menu-btn { display: none; } }
+    .nav-mobile { overflow: hidden; max-height: 0; transition: max-height 0.3s ease; border-top: 0 solid transparent; }
+    .nav-mobile.open { max-height: 20rem; border-top: 1px solid color-mix(in oklch, var(--border), transparent 40%); }
+    .nav-mobile nav { display: flex; flex-direction: column; gap: 0.25rem; padding: 1rem 1.5rem; }
+    .nav-mobile a { display: block; padding: 0.625rem 0.75rem; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: color-mix(in oklch, var(--foreground), transparent 30%); transition: background 0.2s, color 0.2s; }
+    .nav-mobile a:hover { background: var(--secondary); color: var(--primary); }
+
+    /* ── HERO ── */
+    #about { position: relative; overflow: hidden; }
+    .hero-blob-r { pointer-events: none; position: absolute; right: -2.5rem; top: 0; width: 26rem; height: 26rem; border-radius: 50%; background: color-mix(in oklch, var(--blush), transparent 70%); filter: blur(60px); }
+    .hero-blob-l { pointer-events: none; position: absolute; left: -4rem; bottom: 0; width: 22rem; height: 22rem; border-radius: 50%; background: color-mix(in oklch, var(--citrus), transparent 70%); filter: blur(60px); }
+    .hero-inner { position: relative; display: grid; align-items: center; gap: 3rem; padding: 4rem 1.5rem; max-width: 72rem; margin: 0 auto; }
+    @media (min-width: 1024px) { .hero-inner { grid-template-columns: 1.1fr 0.9fr; padding: 6rem 1.5rem; } }
+    .badge-available { display: inline-flex; align-items: center; gap: 0.5rem; border-radius: 9999px; background: var(--citrus); padding: 0.375rem 1rem; font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--citrus-fg); }
+    .hero-title { margin-top: 1.5rem; font-family: var(--font-serif); font-size: clamp(2.5rem, 6vw, 3.5rem); font-weight: 900; line-height: 1.05; letter-spacing: -0.02em; color: var(--foreground); }
+    .hero-accent { position: relative; font-style: italic; color: var(--primary); }
+    .hero-accent::after { content: ''; position: absolute; bottom: -0.25rem; left: 0; z-index: -1; width: 100%; height: 0.75rem; background: color-mix(in oklch, var(--blush), transparent 60%); border-radius: 9999px; transform: rotate(-1deg); }
+    .hero-intro { margin-top: 1.5rem; max-width: 36rem; font-size: 1rem; line-height: 1.7; color: var(--muted-fg); }
+    .hero-ctas { margin-top: 2rem; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      border-radius: 9999px; background: var(--primary); padding: 0.75rem 1.5rem;
+      font-size: 0.875rem; font-weight: 700; color: var(--primary-fg);
+      box-shadow: 4px 4px 0 0 var(--blush); transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 6px 6px 0 0 var(--blush); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      border-radius: 9999px; border: 2px solid color-mix(in oklch, var(--foreground), transparent 85%);
+      background: var(--card); padding: 0.75rem 1.5rem;
+      font-size: 0.875rem; font-weight: 700; color: var(--foreground);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--blush); color: var(--blush-fg); }
+    /* FIX #3: aspect ratio using padding-bottom trick instead of aspect-4/5 */
+    .portrait-wrap { position: relative; width: 100%; max-width: 22rem; margin: 0 auto; }
+    .portrait-bg1 { position: absolute; inset: -0.75rem; z-index: -1; border-radius: 2rem; background: var(--citrus); transform: rotate(3deg); }
+    .portrait-bg2 { position: absolute; inset: -0.75rem; z-index: -2; border-radius: 2rem; background: color-mix(in oklch, var(--blush), transparent 50%); transform: rotate(-3deg); }
+    .portrait-frame { position: relative; overflow: hidden; border-radius: 1.75rem; border: 2px solid color-mix(in oklch, var(--foreground), transparent 90%); background: var(--card); box-shadow: 0 20px 60px -10px oklch(0 0 0 / 0.15); }
+    .portrait-img-box { position: relative; padding-bottom: 125%; /* 4:5 ratio fix */ overflow: hidden; }
+    .portrait-img-box img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .portrait-caption { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; border-top: 1px solid var(--border); padding: 1rem 1.25rem; }
+    .portrait-initials { display: flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: 50%; background: var(--blush); font-size: 0.75rem; font-weight: 700; color: var(--blush-fg); flex-shrink: 0; }
+    .portrait-label { font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted-fg); line-height: 1.3; }
+    .portrait-badge { border-radius: 9999px; background: var(--citrus); padding: 0.25rem 0.75rem; font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--citrus-fg); white-space: nowrap; }
+
+    /* ── SKILLS ── */
+    #skills { max-width: 72rem; margin: 0 auto; padding: 5rem 1.5rem; }
+    @media (min-width: 768px) { #skills { padding: 7rem 1.5rem; } }
+    .skills-header { max-width: 48rem; margin: 0 auto; text-align: center; }
+    .badge-section { display: inline-block; border-radius: 9999px; background: color-mix(in oklch, var(--blush), transparent 80%); padding: 0.25rem 1rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blush-fg); transform: rotate(-2deg); }
+    .section-title { margin-top: 1rem; font-family: var(--font-serif); font-size: clamp(1.75rem, 4vw, 2.25rem); font-weight: 700; color: var(--foreground); }
+    .section-sub { margin-top: 1rem; font-size: 1rem; font-style: italic; line-height: 1.7; color: var(--muted-fg); }
+    .skills-grid { margin-top: 3.5rem; display: grid; gap: 1.5rem; }
+    @media (min-width: 768px) { .skills-grid { grid-template-columns: repeat(3, 1fr); } }
+    .skill-card { overflow: hidden; border-radius: 1.5rem; border: 2px solid var(--border); background: var(--card); transition: transform 0.2s, box-shadow 0.2s; }
+    .skill-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -8px oklch(0 0 0 / 0.1); }
+    .skill-card-bar { height: 0.5rem; width: 100%; }
+    .bar-azure { background: var(--azure); }
+    .bar-blush { background: var(--blush); }
+    .bar-citrus { background: var(--citrus); }
+    .skill-card-body { padding: 1.75rem; }
+    .skill-card-title { font-size: 1.0625rem; font-weight: 700; color: var(--foreground); }
+    .skill-list { margin-top: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem; }
+    .skill-item { display: flex; align-items: center; gap: 0.75rem; font-size: 0.875rem; color: color-mix(in oklch, var(--foreground), transparent 20%); }
+    .skill-icon { display: flex; align-items: center; justify-content: center; width: 1.25rem; height: 1.25rem; border-radius: 0.375rem; flex-shrink: 0; font-weight: 900; font-size: 0.875rem; line-height: 1; }
+    .icon-azure { background: var(--azure); color: var(--azure-fg); }
+    .icon-blush { background: var(--blush); color: var(--blush-fg); }
+    .icon-citrus { background: var(--citrus); color: var(--citrus-fg); }
+
+    /* ── PROJECTS ── */
+    #projects { border-top: 1px solid color-mix(in oklch, var(--border), transparent 40%); background: color-mix(in oklch, var(--secondary), transparent 60%); }
+    .projects-inner { max-width: 72rem; margin: 0 auto; padding: 5rem 1.5rem; }
+    @media (min-width: 768px) { .projects-inner { padding: 7rem 1.5rem; } }
+    .projects-header { display: grid; gap: 1.5rem; }
+    @media (min-width: 768px) { .projects-header { grid-template-columns: 1fr 1fr; align-items: end; } }
+    .projects-eyebrow { display: inline-block; border-radius: 9999px; background: var(--citrus); padding: 0.25rem 0.75rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--citrus-fg); transform: rotate(-1deg); }
+    .projects-title { margin-top: 0.75rem; font-family: var(--font-serif); font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; color: var(--foreground); }
+    .projects-sub { font-size: 0.875rem; line-height: 1.7; color: var(--muted-fg); }
+    .projects-grid { margin-top: 3.5rem; display: grid; gap: 1.75rem; }
+    @media (min-width: 640px) { .projects-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .projects-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    /* FIX #3: aspect-16/10 replaced with padding-bottom 62.5% */
+    .project-card { display: flex; flex-direction: column; overflow: hidden; border-radius: 1.5rem; border: 2px solid var(--border); background: var(--card); transition: transform 0.2s, box-shadow 0.2s; }
+    .project-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -8px oklch(0 0 0 / 0.12); }
+    .project-img-box { position: relative; padding-bottom: 62.5%; /* 16:10 ratio fix */ overflow: hidden; }
+    .project-img-box img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+    .project-card:hover .project-img-box img { transform: scale(1.05); }
+    .project-cat-badge { position: absolute; left: 1rem; top: 1rem; border-radius: 9999px; padding: 0.25rem 0.75rem; font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+    .project-body { display: flex; flex-direction: column; flex: 1; padding: 1.5rem; }
+    .project-title { font-size: 1.0625rem; font-weight: 700; line-height: 1.35; color: var(--foreground); }
+    .project-desc { margin-top: 0.75rem; font-size: 0.875rem; line-height: 1.65; color: var(--muted-fg); }
+    .project-tags { margin-top: 1.25rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .project-tag { border-radius: 9999px; border: 1px solid var(--border); background: var(--secondary); padding: 0.25rem 0.625rem; font-size: 0.625rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--secondary-fg); }
+    .project-footer { margin-top: 1.5rem; display: flex; align-items: flex-end; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 1rem; }
+    .project-link { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--primary); transition: color 0.2s; }
+    .project-link:hover { color: var(--blush-fg); }
+    .project-link-icon { display: flex; align-items: center; justify-content: center; width: 1.75rem; height: 1.75rem; border-radius: 50%; background: var(--accent); color: var(--accent-fg); transition: transform 0.2s; font-size: 0.875rem; }
+    .project-link:hover .project-link-icon { transform: rotate(45deg); }
+
+    /* ── CONTACT FOOTER ── */
+    #contact { position: relative; overflow: hidden; background: var(--ink); color: var(--ink-fg); }
+    .contact-blob-l { pointer-events: none; position: absolute; left: -5rem; top: 2.5rem; width: 18rem; height: 18rem; border-radius: 50%; background: color-mix(in oklch, var(--blush), transparent 80%); filter: blur(60px); }
+    .contact-blob-r { pointer-events: none; position: absolute; right: -4rem; bottom: 0; width: 18rem; height: 18rem; border-radius: 50%; background: color-mix(in oklch, var(--citrus), transparent 80%); filter: blur(60px); }
+    .contact-inner { position: relative; max-width: 56rem; margin: 0 auto; padding: 6rem 1.5rem; text-align: center; }
+    .badge-contact { display: inline-flex; align-items: center; gap: 0.5rem; border-radius: 9999px; background: var(--citrus); padding: 0.375rem 1rem; font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--citrus-fg); }
+    .contact-title { margin-top: 1.5rem; font-family: var(--font-serif); font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; line-height: 1.2; }
+    .contact-body { margin: 1.5rem auto 0; max-width: 40rem; font-size: 1rem; line-height: 1.7; color: color-mix(in oklch, var(--ink-fg), transparent 30%); }
+    .contact-email-btn {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      margin-top: 2.5rem; border-radius: 9999px; background: var(--citrus); padding: 1rem 1.75rem;
+      font-size: 1rem; font-weight: 700; color: var(--citrus-fg);
+      box-shadow: 5px 5px 0 0 var(--blush); transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .contact-email-btn:hover { transform: translateY(-2px); box-shadow: 7px 7px 0 0 var(--blush); }
+    .contact-footer-row { margin-top: 4rem; display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 1rem; border-top: 1px solid color-mix(in oklch, var(--ink-fg), transparent 85%); padding-top: 2rem; }
+    @media (min-width: 640px) { .contact-footer-row { flex-direction: row; } }
+    /* FIX #5: added noopener alongside noreferrer */
+    .copyright { font-size: 0.875rem; color: color-mix(in oklch, var(--ink-fg), transparent 50%); }
+    .linkedin-link { color: color-mix(in oklch, var(--ink-fg), transparent 40%); transition: color 0.2s; }
+    .linkedin-link:hover { color: var(--ink-fg); }
+
+    /* SVG icons inline */
+    svg { display: inline-block; vertical-align: middle; }
+
+    /* ── Placeholder images (colored gradients) ── */
+    .img-placeholder-pipeline { background: linear-gradient(135deg, oklch(0.82 0.1 240), oklch(0.72 0.15 270)); }
+    .img-placeholder-data { background: linear-gradient(135deg, oklch(0.85 0.12 352), oklch(0.75 0.16 20)); }
+    .img-placeholder-report { background: linear-gradient(135deg, oklch(0.88 0.14 118), oklch(0.78 0.12 80)); }
+    .placeholder-img { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: var(--muted); } ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header id="site-header">
+  <div class="header-inner">
+    <a href="#top" class="logo-link">
+      <div class="logo-icon">✳</div>
+      <span>
+        <span class="logo-name">Nguyễn Lan Anh</span>
+        <span class="logo-role">Data Analyst Intern</span>
+      </span>
+    </a>
+
+    <nav class="nav-desktop" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+      <span class="badge-open">
+        <span class="badge-dot"></span>
+        Open
+      </span>
+    </nav>
+
+    <button class="menu-btn" aria-label="Open menu" aria-expanded="false" onclick="toggleMenu(this)">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-menu"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-close" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <div class="nav-mobile" id="mobile-menu">
+    <nav aria-label="Mobile">
+      <a href="#about" onclick="closeMobileMenu()">About</a>
+      <a href="#skills" onclick="closeMobileMenu()">Skills</a>
+      <a href="#projects" onclick="closeMobileMenu()">Projects</a>
+      <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ── HERO ── -->
+<section id="about">
+  <div class="hero-blob-r" aria-hidden="true"></div>
+  <div class="hero-blob-l" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+    <div>
+      <span class="badge-available">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+        Open to work
+      </span>
+
+      <h1 class="hero-title">
+        <em class="hero-accent">Driven by Data</em><br>
+        <em class="hero-accent">Focused on Business</em>
+      </h1>
+
+      <p class="hero-intro">
+        Hi, I'm Nguyễn Lan Anh — a detail-oriented International Business Economics student with strong analytical and data management skills. Experienced in data processing, reporting, and business insight generation through academic research and business competitions. Proficient in Excel and statistical analysis tools, with a strong commitment to accuracy, responsibility, and continuous learning.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#projects" class="btn-primary">
+          View Projects
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        </a>
+        <a href="#contact" class="btn-secondary">Let's talk</a>
+      </div>
+    </div>
+
+    <!-- Portrait -->
+    <div class="portrait-wrap">
+      <div class="portrait-bg1"></div>
+      <div class="portrait-bg2"></div>
+      <div class="portrait-frame">
+        <div class="portrait-img-box">
+          <!-- Replace src with your actual portrait image: /portrait.png -->
+          <div style="position:absolute;inset:0;background:linear-gradient(135deg,oklch(0.82 0.12 240),oklch(0.75 0.15 275));display:flex;align-items:center;justify-content:center;font-size:4rem;">👩‍💻</div>
+        </div>
+        <div class="portrait-caption">
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <div class="portrait-initials">YN</div>
+            <span class="portrait-label">Data Analyst Intern</span>
+          </div>
+          <span class="portrait-badge">Open to work</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILLS ── -->
+<section id="skills">
+  <div class="skills-header">
+    <span class="badge-section">What I do</span>
+    <h2 class="section-title text-balance">Core Competencies</h2>
+    <p class="section-sub">"A hybrid skillset combining data analytics, business intelligence, and commercial strategy to drive data-informed decision-making and business growth."</p>
+  </div>
+
+  <div class="skills-grid">
+    <!-- Card 1: Azure -->
+    <div class="skill-card" style="border-color: color-mix(in oklch, var(--azure), transparent 60%);">
+      <div class="skill-card-bar bar-azure"></div>
+      <div class="skill-card-body">
+        <h3 class="skill-card-title">Data &amp; Business Analytics</h3>
+        <ul class="skill-list">
+          <li class="skill-item"><span class="skill-icon icon-azure">+</span>Python</li>
+          <li class="skill-item"><span class="skill-icon icon-azure">+</span>SQL Basics</li>
+          <li class="skill-item"><span class="skill-icon icon-azure">+</span>Data Cleaning</li>
+          <li class="skill-item"><span class="skill-icon icon-azure">+</span>Stata</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Card 2: Blush -->
+    <div class="skill-card" style="border-color: color-mix(in oklch, var(--blush), transparent 60%);">
+      <div class="skill-card-bar bar-blush"></div>
+      <div class="skill-card-body">
+        <h3 class="skill-card-title">Business Intelligence &amp; Decision Support</h3>
+        <ul class="skill-list">
+          <li class="skill-item"><span class="skill-icon icon-blush">+</span>Power BI</li>
+          <li class="skill-item"><span class="skill-icon icon-blush">+</span>DAX</li>
+          <li class="skill-item"><span class="skill-icon icon-blush">+</span>Tableau</li>
+          <li class="skill-item"><span class="skill-icon icon-blush">+</span>Excel (VBA)</li>
+          <li class="skill-item"><span class="skill-icon icon-blush">+</span>Dashboarding</li>
+          <li class="skill-item"><span class="skill-icon icon-blush">+</span>Data Storytelling</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Card 3: Citrus -->
+    <div class="skill-card" style="border-color: color-mix(in oklch, var(--citrus), transparent 60%);">
+      <div class="skill-card-bar bar-citrus"></div>
+      <div class="skill-card-body">
+        <h3 class="skill-card-title">Business Strategy &amp; Commercial Insights</h3>
+        <ul class="skill-list">
+          <li class="skill-item"><span class="skill-icon icon-citrus">+</span>Customer Segmentation</li>
+          <li class="skill-item"><span class="skill-icon icon-citrus">+</span>Market Research</li>
+          <li class="skill-item"><span class="skill-icon icon-citrus">+</span>Operations Analytics</li>
+          <li class="skill-item"><span class="skill-icon icon-citrus">+</span>KPI Monitoring</li>
+          <li class="skill-item"><span class="skill-icon icon-citrus">+</span>Customer Service</li>
+          <li class="skill-item"><span class="skill-icon icon-citrus">+</span>Sales Funnel Analytics</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROJECTS ── -->
+<section id="projects">
+  <div class="projects-inner">
+    <div class="projects-header">
+      <div>
+        <span class="projects-eyebrow">Portfolio</span>
+        <h2 class="projects-title">Selected Works</h2>
+      </div>
+      <p class="projects-sub text-pretty">A curated selection of projects, ad-hoc analyses, and operational tasks that demonstrate the ability to transform data into actionable insights and deliver measurable business impact.</p>
+    </div>
+
+    <div class="projects-grid">
+
+      <!-- Project 1 -->
+      <article class="project-card">
+        <div class="project-img-box img-placeholder-pipeline">
+          <div class="placeholder-img">🔄</div>
+          <span class="project-cat-badge bg-azure text-azure-fg" style="background:var(--azure);color:var(--azure-fg);">Data &amp; Business Analytics</span>
+        </div>
+        <div class="project-body">
+          <h3 class="project-title">ETL Pipeline (Ad-hoc task)</h3>
+          <p class="project-desc">Built a Python-based ETL workflow to validate and reconcile daily inventory between WMS and OMS. Automated data cleaning, barcode matching, and aging checks to identify missing, duplicated, or slow-moving SKUs, improving stock accuracy for e-commerce operations.</p>
+          <div class="project-tags">
+            <span class="project-tag">Python</span>
+            <span class="project-tag">ETL</span>
+            <span class="project-tag">Data Quality</span>
+            <span class="project-tag">Inventory Analytics</span>
+          </div>
+          <div class="project-footer">
+            <a href="#" class="project-link">
+              Read report
+              <span class="project-link-icon">↗</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 2 -->
+      <article class="project-card">
+        <div class="project-img-box img-placeholder-data">
+          <div class="placeholder-img">📊</div>
+          <span class="project-cat-badge" style="background:var(--blush);color:var(--blush-fg);">Business Intelligence</span>
+        </div>
+        <div class="project-body">
+          <h3 class="project-title">B2B Receivables Analytics &amp; Project Management</h3>
+          <p class="project-desc">Designed a complete data-processing and analytical dashboard for a B2B receivables portfolio. Transformed fragmented operational spreadsheets into a structured analytics model that directly supported sales decision-making and credit-risk control.</p>
+          <div class="project-tags">
+            <span class="project-tag">Power BI</span>
+            <span class="project-tag">Excel + VBA</span>
+            <span class="project-tag">Power Query</span>
+            <span class="project-tag">Dashboards</span>
+          </div>
+          <div class="project-footer">
+            <a href="#" class="project-link">
+              View project
+              <span class="project-link-icon">↗</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 3 -->
+      <article class="project-card">
+        <div class="project-img-box img-placeholder-report">
+          <div class="placeholder-img">📈</div>
+          <span class="project-cat-badge" style="background:var(--citrus);color:var(--citrus-fg);">Reporting</span>
+        </div>
+        <div class="project-body">
+          <h3 class="project-title">Marketplace Operations Report</h3>
+          <p class="project-desc">Independently handled e-commerce reporting after an organizational takeover. Within two months, on-time shipping improved to 95–100% across platforms, non-fulfillment dropped sharply, and store ratings stabilized — a challenging but high-impact operational transformation.</p>
+          <div class="project-tags">
+            <span class="project-tag">Advanced Excel</span>
+            <span class="project-tag">PowerPoint</span>
+            <span class="project-tag">SLA Monitoring</span>
+            <span class="project-tag">Sales Ops</span>
+          </div>
+          <div class="project-footer">
+            <a href="#" class="project-link">
+              View report
+              <span class="project-link-icon">↗</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 4 -->
+      <article class="project-card">
+        <div class="project-img-box img-placeholder-data">
+          <div class="placeholder-img">🎯</div>
+          <span class="project-cat-badge" style="background:var(--azure);color:var(--azure-fg);">Customer Classification</span>
+        </div>
+        <div class="project-body">
+          <h3 class="project-title">Business Classification &amp; Scoring Model</h3>
+          <p class="project-desc">Developed classification logic and an automated scoring sheet that evaluates each enterprise objectively against business thresholds. The tool streamlined account-manager workflows, standardized customer assessment, and reduced manual scoring time.</p>
+          <div class="project-tags">
+            <span class="project-tag">Excel Automation</span>
+            <span class="project-tag">Scoring Model</span>
+            <span class="project-tag">Business Rules</span>
+            <span class="project-tag">Workflow Optimization</span>
+          </div>
+          <div class="project-footer">
+            <a href="#" class="project-link">
+              View summary sheet
+              <span class="project-link-icon">↗</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 5 -->
+      <article class="project-card">
+        <div class="project-img-box img-placeholder-report">
+          <div class="placeholder-img">📋</div>
+          <span class="project-cat-badge" style="background:var(--blush);color:var(--blush-fg);">Business-Facing Reporting</span>
+        </div>
+        <div class="project-body">
+          <h3 class="project-title">Bi-Weekly KPI Performance Report</h3>
+          <p class="project-desc">Developed a structured bi-weekly performance report integrating sales KPIs, customer activity, revenue tracking, and qualitative feedback. Designed the evaluation logic and standardized the reporting framework for all account managers.</p>
+          <div class="project-tags">
+            <span class="project-tag">Excel Automation</span>
+            <span class="project-tag">KPI Tracking</span>
+            <span class="project-tag">Performance Reporting</span>
+            <span class="project-tag">Sales Ops</span>
+          </div>
+          <div class="project-footer">
+            <a href="#" class="project-link">
+              View reporting sheet
+              <span class="project-link-icon">↗</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 6 -->
+      <article class="project-card">
+        <div class="project-img-box img-placeholder-pipeline">
+          <div class="placeholder-img">🤖</div>
+          <span class="project-cat-badge" style="background:var(--citrus);color:var(--citrus-fg);">Database &amp; Automation</span>
+        </div>
+        <div class="project-body">
+          <h3 class="project-title">Student Management System &amp; Attendance Automation</h3>
+          <p class="project-desc">Designed a complete student–class management system using Airtable and Google Sheets. Built a structured database for students, classes, and coaches, created a streamlined attendance sheet, and automated data sync using Make.com.</p>
+          <div class="project-tags">
+            <span class="project-tag">Airtable</span>
+            <span class="project-tag">Google Sheets</span>
+            <span class="project-tag">Make.com</span>
+            <span class="project-tag">No-Code</span>
+          </div>
+          <div class="project-footer">
+            <a href="#" class="project-link">
+              View project
+              <span class="project-link-icon">↗</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT FOOTER ── -->
+<footer id="contact">
+  <div class="contact-blob-l" aria-hidden="true"></div>
+  <div class="contact-blob-r" aria-hidden="true"></div>
+  <div class="contact-inner">
+    <span class="badge-contact">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
+      Get in touch
+    </span>
+    <h2 class="contact-title text-balance">Let's work together!</h2>
+    <p class="contact-body text-pretty">I'm currently looking for new opportunities in Data Analytics and Business Development. It would be my honor to have a chance to work with you!</p>
+    <a href="mailto:anhlanwork1602@gmail.com" class="contact-email-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      anhlanwork1602@gmail.com
+    </a>
+
+    <div class="contact-footer-row">
+      <p class="copyright">© <span id="year"></span> Nguyễn Lan Anh. All rights reserved.</p>
+      <!-- FIX #5: rel="noopener noreferrer" on all external links -->
+      <a href="https://www.linkedin.com/in/nguyen-lan-anh-ftu2/" target="_blank" rel="noopener noreferrer" class="linkedin-link" aria-label="LinkedIn profile">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Dynamic year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Mobile menu toggle
+  function toggleMenu(btn) {
+    const menu = document.getElementById('mobile-menu');
+    const isOpen = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen);
+    btn.querySelector('.icon-menu').style.display = isOpen ? 'none' : '';
+    btn.querySelector('.icon-close').style.display = isOpen ? '' : 'none';
+  }
+  function closeMobileMenu() {
+    const menu = document.getElementById('mobile-menu');
+    const btn = document.querySelector('.menu-btn');
+    menu.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.querySelector('.icon-menu').style.display = '';
+    btn.querySelector('.icon-close').style.display = 'none';
+  }
+</script>
+</body>
+</html>
